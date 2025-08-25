@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block title %}Create Account{% endblock %} {% block
+content %}
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="text-center mb-4">
+      <i class="fas fa-user-plus fa-3x text-primary"></i>
+      <h1 class="h3 fw-bold mt-3">Create an Account</h1>
+      <p class="text-muted">It's free and only takes a minute.</p>
+    </div>
+
+    <form
+      action=""
+      method="post"
+      novalidate
+      class="w-100"
+    >
+      {{ form.hidden_tag() }}
+
+      <div class="mb-3">
+        {{ form.username.label(class="form-label") }} {{
+        form.username(class="form-control", placeholder="Choose a unique
+        username") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.email.label(class="form-label") }} {{
+        form.email(class="form-control", placeholder="your.email@example.com")
+        }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.password.label(class="form-label") }} {{
+        form.password(class="form-control", placeholder="Create a secure
+        password") }}
+      </div>
+
+      <div class="mb-4">
+        {{ form.password2.label(class="form-label") }} {{
+        form.password2(class="form-control", placeholder="Confirm your
+        password") }}
+      </div>
+
+      <div class="d-grid">
+        {{ form.submit(class="btn btn-primary btn-lg", value="Create Account")
+        }}
+      </div>
+    </form>
+
+    <p class="text-center small mt-4 mb-0">
+      Already have an account? <a href="{{ url_for('auth.login') }}">Sign In</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

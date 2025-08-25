@@ -1,0 +1,239 @@
+{% extends "base.html" %} {% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/new_test.css') }}"
+/>
+
+<div class="new-test-container">
+  <div
+    class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom"
+  >
+    <h1 class="h2">New Test - Step 1: Symptoms</h1>
+    <a
+      href="{{ url_for('main.dashboard') }}"
+      class="btn btn-sm btn-outline-secondary"
+      >Cancel</a
+    >
+  </div>
+  {% include '_flash_messages.html' %}
+
+  <form
+    action="{{ url_for('main.new_test') }}"
+    method="post"
+  >
+    <div class="card shadow-sm">
+      <div class="card-body p-0">
+        <div class="symptom-slider-container">
+          <div class="symptom-slider-wrapper">
+            <!-- Slide 1: Tremors -->
+            <div class="symptom-slide">
+              <h3>Do you experience tremors?</h3>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="tremor"
+                  value="at_rest"
+                  id="tremor_rest"
+                  class="form-check-input"
+                  required
+                />
+                <label
+                  for="tremor_rest"
+                  class="form-check-label"
+                  >Yes, when my hands are resting.</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="tremor"
+                  value="action"
+                  id="tremor_action"
+                  class="form-check-input"
+                />
+                <label
+                  for="tremor_action"
+                  class="form-check-label"
+                  >Yes, when I am performing an action.</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="tremor"
+                  value="no"
+                  id="tremor_no"
+                  class="form-check-input"
+                />
+                <label
+                  for="tremor_no"
+                  class="form-check-label"
+                  >No, I do not experience tremors.</label
+                >
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary next-btn"
+              >
+                Next →
+              </button>
+            </div>
+
+            <!-- Slide 2: Stiffness -->
+            <div class="symptom-slide">
+              <h3>Do you experience stiffness or slowness?</h3>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="stiffness"
+                  value="yes"
+                  id="stiffness_yes"
+                  class="form-check-input"
+                  required
+                />
+                <label
+                  for="stiffness_yes"
+                  class="form-check-label"
+                  >Yes, my limbs feel rigid or I move slower.</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="stiffness"
+                  value="no"
+                  id="stiffness_no"
+                  class="form-check-input"
+                />
+                <label
+                  for="stiffness_no"
+                  class="form-check-label"
+                  >No, I have not noticed this.</label
+                >
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary next-btn"
+              >
+                Next →
+              </button>
+            </div>
+
+            <!-- Slide 3: Balance / Walking Issue (CORRECTED) -->
+            <div class="symptom-slide">
+              <h3>Do you have balance or walking issues?</h3>
+              <div class="form-check">
+                {# The name attribute is now correctly 'walking_issue' #}
+                <input
+                  type="radio"
+                  name="walking_issue"
+                  value="yes"
+                  id="balance_yes"
+                  class="form-check-input"
+                  required
+                />
+                <label
+                  for="balance_yes"
+                  class="form-check-label"
+                  >Yes, I feel unsteady or have shuffling steps.</label
+                >
+              </div>
+              <div class="form-check">
+                {# The name attribute is now correctly 'walking_issue' #}
+                <input
+                  type="radio"
+                  name="walking_issue"
+                  value="no"
+                  id="balance_no"
+                  class="form-check-input"
+                />
+                <label
+                  for="balance_no"
+                  class="form-check-label"
+                  >No, my balance and walking feel normal.</label
+                >
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary next-btn"
+              >
+                Next →
+              </button>
+            </div>
+
+            <!-- Slide 4: Final Details & Submit -->
+            <div class="symptom-slide">
+              <h3>Final Details</h3>
+              <div class="mb-3">
+                <label
+                  for="age"
+                  class="form-label fw-bold"
+                  >Your Age:</label
+                >
+                <input
+                  type="number"
+                  name="age"
+                  id="age"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  for="gender"
+                  class="form-label fw-bold"
+                  >Your Gender:</label
+                >
+                <select
+                  name="gender"
+                  id="gender"
+                  class="form-select"
+                  required
+                >
+                  <option
+                    value=""
+                    disabled
+                    selected
+                  >
+                    Select...
+                  </option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="other_symptoms"
+                  class="form-label fw-bold"
+                  >Other symptoms or notes:</label
+                >
+                <textarea
+                  name="other_symptoms"
+                  id="other_symptoms"
+                  rows="2"
+                  class="form-control"
+                  placeholder="(e.g., changes in handwriting)"
+                ></textarea>
+              </div>
+              <div class="d-grid mt-4">
+                <button
+                  type="submit"
+                  class="btn btn-success btn-lg"
+                >
+                  Continue to Audio Test →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %} {% block scripts %}
+<script
+  src="{{ url_for('static', filename='js/new_test.js') }}"
+  defer
+></script>
+{% endblock %}

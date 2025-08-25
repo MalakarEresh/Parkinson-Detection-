@@ -1,0 +1,126 @@
+{% extends "base.html" %} {% block title %}New Test - Step 2{% endblock %} {%
+block content %}
+<div class="container py-4">
+  {# This include is optional but good for displaying any potential errors from
+  the server #} {% include '_flash_messages.html' %}
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h2">New Test - Step 2: Voice Sample</h1>
+      <p class="text-muted mb-0">
+        For the final step, please provide a voice sample for analysis.
+      </p>
+    </div>
+    <a
+      href="{{ url_for('main.dashboard') }}"
+      class="btn btn-sm btn-outline-secondary"
+      >Cancel Test</a
+    >
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+      <form
+        id="audio-form"
+        action="{{ url_for('main.audio_test') }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <!-- 
+                    These hidden fields are crucial. They take the data passed in the URL 
+                    (from the previous step) and include it in this form's submission,
+                    so the final backend route receives ALL the data at once.
+                -->
+        {% for key, value in symptom_data.items() %}
+        <input
+          type="hidden"
+          name="{{ key }}"
+          value="{{ value }}"
+        />
+        {% endfor %}
+
+        <div class="row">
+          <div class="col-md-6 mb-4 mb-md-0">
+            <h5 class="fw-bold">
+              <i class="fas fa-microphone me-2"></i>Option 1: Record Voice
+            </h5>
+            <p class="small text-muted">
+              Click "Start Recording" and sustain a vowel sound (like 'ahhh')
+              for 5-10 seconds.
+            </p>
+            <div
+              id="recorder-ui"
+              class="mb-3"
+            >
+              <button
+                id="recordButton"
+                class="btn btn-danger w-100"
+              >
+                Start Recording
+              </button>
+              <button
+                id="stopButton"
+                class="btn btn-secondary w-100 mt-2"
+                disabled
+              >
+                Stop Recording
+              </button>
+            </div>
+            <div
+              id="recording-status"
+              class="form-text mt-2 text-center small"
+            ></div>
+            <audio
+              id="audioPlayback"
+              controls
+              class="mt-2 d-none w-100"
+            ></audio>
+          </div>
+          <div class="col-md-6">
+            <h5 class="fw-bold">
+              <i class="fas fa-upload me-2"></i>Option 2: Upload File
+            </h5>
+            <p class="small text-muted">
+              Select a .wav or .mp3 file from your device.
+            </p>
+            <input
+              class="form-control"
+              type="file"
+              id="audioUpload"
+              name="uploaded_audio_data"
+              accept="audio/*"
+            />
+          </div>
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="d-grid">
+          <button
+            id="submitButton"
+            type="submit"
+            class="btn btn-primary btn-lg"
+            disabled
+          >
+            Analyze & Complete Test
+          </button>
+          <div
+            id="submit-status"
+            class="form-text text-danger text-center mt-2"
+          ></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<!-- 
+        We link to the STABLE recorder.js from our checkpoint.
+        It is already designed to find the form and elements by their IDs ('audio-form', 'recordButton', etc.)
+        so it will work perfectly on this new page without any changes.
+    -->
+<script
+  src="{{ url_for('static', filename='js/recorder.js') }}"
+  defer
+></script>
+{% endblock %}

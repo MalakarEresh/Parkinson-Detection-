@@ -1,0 +1,25 @@
+Dear {{ user.username }},
+
+Thank you for using the Parkinson's Disease Voice Detection System. Here is a summary of your test taken on {{ report.timestamp.strftime('%Y-%m-%d %H:%M') }} UTC.
+
+---------------------------------
+VOCAL ANALYSIS RESULT
+---------------------------------
+- Final Assessment: {{ report.final_result }}
+{% if 'Override' in report.final_result %}- Note: The model's prediction was positive but was overridden by the age criteria provided (Age: {{report.age}}).
+{% endif %}
+
+{# --- NEW SECTION TO DISPLAY SYMPTOMS --- #}
+{% if symptoms %}
+---------------------------------
+SYMPTOMS YOU PROVIDED
+---------------------------------
+{% for key, value in symptoms.items() %}- {{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+---------------------------------
+
+Disclaimer: This result is based on a machine learning model and is for informational purposes only. It is not a medical diagnosis. Please consult a qualified healthcare professional for accurate medical advice.
+
+Sincerely,
+The Parkinson's Detector Team

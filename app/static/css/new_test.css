@@ -1,0 +1,92 @@
+/* =========================================== */
+/* == Styles for the Multi-Step Test Page   == */
+/* =========================================== */
+
+/* --- Main Container --- */
+.new-test-container {
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+/* --- The Slider Mechanism --- */
+.symptom-slider-container {
+  width: 100%;
+  overflow: hidden; /* This is essential for hiding the other slides */
+}
+
+/* This is the wrapper that holds all slides in a long horizontal row */
+.symptom-slider-wrapper {
+  display: flex;
+  width: 400%; /* We have 4 slides, so 4 * 100% = 400% */
+  transition: transform 0.5s ease-in-out; /* This creates the smooth sliding animation */
+}
+
+/* --- Individual Slide Styling --- */
+.symptom-slide {
+  width: 25%; /* Each slide is 1/4 of the wrapper's width */
+  flex-shrink: 0; /* Prevents slides from shrinking to fit */
+  padding: 2.5rem;
+  box-sizing: border-box;
+}
+
+.symptom-slide h3 {
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+  color: #343a40;
+}
+
+/* --- Custom Radio Button Box Styling --- */
+
+/* First, we reset the default Bootstrap container for the radio buttons */
+.symptom-slide .form-check {
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+/* Then, we style the LABEL to look like a big, clickable button/card */
+.symptom-slide .form-check-label {
+  display: block; /* Makes the label take up the full width for easier clicking */
+  background-color: #f8f9fa;
+  padding: 1rem 1.25rem;
+  border: 2px solid #dee2e6;
+  border-radius: 0.375rem; /* Standard Bootstrap border-radius */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out; /* Smooth transition for hover/active states */
+  font-weight: 500;
+}
+
+/* Add a hover effect for better user feedback */
+.symptom-slide .form-check-label:hover {
+  border-color: #8f94fb; /* A nice highlight color */
+  transform: translateY(-2px); /* A slight "lift" effect */
+}
+
+/* This is the key part: we completely hide the original radio button circle */
+.symptom-slide .form-check input[type="radio"] {
+  display: none;
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+
+/* This is the magic: When the hidden radio button is checked, we style its ADJACENT label */
+.symptom-slide .form-check input[type="radio"]:checked + label {
+  background-color: #e9eafd; /* A light, pleasing primary color */
+  border-color: #4e54c8; /* Your main primary color */
+  color: #4e54c8;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(78, 84, 200, 0.15); /* Adds a subtle depth */
+}
+
+/* --- Button Styling --- */
+.next-btn {
+  float: right;
+  margin-top: 1.5rem;
+}
+
+.symptom-submit-btn {
+  font-weight: 600;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}

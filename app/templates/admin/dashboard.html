@@ -1,0 +1,84 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-4">
+  <h1 class="h2 mb-4">Admin Dashboard</h1>
+
+  <!-- Stat Cards Row -->
+  <div class="row">
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card stat-card border-left-primary">
+        <div class="card-body">
+          <div>
+            <div class="text-xs text-primary text-uppercase">
+              Total Registered Users
+            </div>
+            <div class="h5 mb-0">{{ user_count }}</div>
+          </div>
+          <div class="card-icon"><i class="fas fa-users"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card stat-card border-left-success">
+        <div class="card-body">
+          <div>
+            <div class="text-xs text-success text-uppercase">
+              Total Tests Submitted
+            </div>
+            <div class="h5 mb-0">{{ report_count }}</div>
+          </div>
+          <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Row -->
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm chart-card mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 fw-bold text-primary">Test Results Breakdown</h6>
+        </div>
+        <div class="card-body">
+          {% if chart_data %}
+          <div class="chart-pie pt-4"><canvas id="myPieChart"></canvas></div>
+          <div class="mt-4 text-center small">
+            {% for label in chart_labels %}
+            <span class="me-3">
+              <i class="fas fa-circle color-{{ loop.index }}"></i> {{ label }}
+            </span>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p class="text-center text-muted p-5">
+            No test data available to generate a chart.
+          </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a
+    href="{{ url_for('main.admin_users') }}"
+    class="btn btn-info"
+    >Manage Users</a
+  >
+</div>
+{% endblock %} {% block scripts %} {# Only include scripts if there is data to
+draw #} {% if chart_data %}
+<!-- 1. Load the Chart.js library FIRST -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+<!-- 2. Create global JS variables with our data from Python. This avoids parsing errors. -->
+<script>
+  var chartLabels = {{ chart_labels|tojson|safe }};
+  var chartData = {{ chart_data|tojson|safe }};
+</script>
+
+<!-- 3. Load OUR script LAST, with 'defer' to ensure it runs after the page is ready -->
+<script
+  src="{{ url_for('static', filename='js/admin-charts.js') }}"
+  defer
+></script>
+{% endif %} {% endblock %}
